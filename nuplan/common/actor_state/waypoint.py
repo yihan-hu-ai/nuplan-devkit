@@ -97,6 +97,14 @@ class Waypoint(InterpolatableState):
         :return: The y position
         """
         return self._oriented_box.center.y  # type:ignore
+    
+    @property
+    def z(self) -> float:
+        """
+        Getter for the z position of the waypoint
+        :return: The z position
+        """
+        return self._oriented_box.z_offset  # type:ignore
 
     @property
     def heading(self) -> float:

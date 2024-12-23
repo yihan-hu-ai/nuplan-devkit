@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import numpy as np
 from functools import cached_property
 from typing import Iterable, List, Union
 
@@ -25,6 +26,7 @@ class EgoState(InterpolatableState):
         tire_steering_angle: float,
         is_in_auto_mode: bool,
         time_point: TimePoint,
+        z_offset: float = 0.0,
     ):
         """
         :param car_footprint: The CarFootprint of Ego
@@ -38,6 +40,7 @@ class EgoState(InterpolatableState):
         self._is_in_auto_mode = is_in_auto_mode
         self._time_point = time_point
         self._dynamic_car_state = dynamic_car_state
+        self._z_offset = z_offset
 
     @cached_property
     def waypoint(self) -> Waypoint:
@@ -223,6 +226,7 @@ class EgoState(InterpolatableState):
         angular_vel: float = 0.0,
         angular_accel: float = 0.0,
         tire_steering_rate: float = 0.0,
+        z_offset: float = 0.0,
     ) -> EgoState:
         """
         Initializer using raw parameters, assumes that the reference frame is CAR_POINT.REAR_AXLE
@@ -256,6 +260,7 @@ class EgoState(InterpolatableState):
             tire_steering_angle=tire_steering_angle,
             time_point=time_point,
             is_in_auto_mode=is_in_auto_mode,
+            z_offset=z_offset,
         )
 
     @classmethod

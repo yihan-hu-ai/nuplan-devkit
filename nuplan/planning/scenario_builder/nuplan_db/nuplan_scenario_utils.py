@@ -451,7 +451,9 @@ def download_and_cache(key: str, local_store: LocalStore, remote_store: S3Store)
 
     # Download and store data locally
     try:
-        blob = remote_store.get(key)
+        sensor = 'lidar' if 'pcd' in key else 'camera'
+        remote_key = '/'.join([s3_mapping[key.split('/')[0]][sensor], key])
+        blob = remote_store.get(remote_key)
         local_store.put(key, blob)
         return cast(BinaryIO, local_store.get(key))
     except RuntimeError as error:

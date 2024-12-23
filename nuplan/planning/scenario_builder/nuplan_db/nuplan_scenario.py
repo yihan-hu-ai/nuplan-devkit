@@ -479,7 +479,7 @@ class NuPlanScenario(AbstractScenario):
         Path(self._sensor_root).mkdir(exist_ok=True)
         self._local_store = LocalStore(self._sensor_root)
         if os.getenv("NUPLAN_DATA_STORE", "") == "s3":
-            s3_url = os.getenv("NUPLAN_DATA_ROOT_S3_URL", "")
+            s3_url = os.getenv("NUPLAN_SENSOR_ROOT_S3_URL", "")
             self._remote_store = S3Store(os.path.join(s3_url, "sensor_blobs"), show_progress=True)
 
         return self._local_store, self._remote_store

@@ -34,7 +34,7 @@ def _parse_tracked_object_row(row: sqlite3.Row) -> TrackedObject:
     """
     category_name = row["category_name"]
     pose = StateSE2(row["x"], row["y"], row["yaw"])
-    oriented_box = OrientedBox(pose, width=row["width"], length=row["length"], height=row["height"])
+    oriented_box = OrientedBox(pose, width=row["width"], length=row["length"], height=row["height"], z_offset=row["z"])
 
     # These next two are globals
     label_local = raw_mapping["global2local"][category_name]
@@ -772,7 +772,7 @@ def get_future_waypoints_for_agents_from_db(
 
     for row in execute_many(query, args, log_file):
         pose = StateSE2(row["x"], row["y"], row["yaw"])
-        oriented_box = OrientedBox(pose, width=row["width"], height=row["height"], length=row["length"])
+        oriented_box = OrientedBox(pose, width=row["width"], height=row["height"], length=row["length"], z_offset=row["z"])
         velocity = StateVector2D(row["vx"], row["vy"])
 
         yield (row["track_token"].hex(), Waypoint(TimePoint(row["timestamp"]), oriented_box, velocity))

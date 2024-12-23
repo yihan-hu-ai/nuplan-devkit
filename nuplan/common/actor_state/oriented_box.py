@@ -41,7 +41,7 @@ class Dimension:
 class OrientedBox:
     """Represents the physical space occupied by agents on the plane."""
 
-    def __init__(self, center: StateSE2, length: float, width: float, height: float):
+    def __init__(self, center: StateSE2, length: float, width: float, height: float, z_offset: float = 0.0):
         """
         :param center: The pose of the geometrical center of the box
         :param length: The length of the OrientedBox
@@ -52,6 +52,7 @@ class OrientedBox:
         self._length = length
         self._width = width
         self._height = height
+        self._z_offset = z_offset
 
     @property
     def dimensions(self) -> Dimension:
@@ -155,6 +156,14 @@ class OrientedBox:
         :return: The pose of the center
         """
         return self._center
+
+    @property
+    def z_offset(self) -> float:
+        """
+        Returns the z offset of the OrientedBox
+        :return: The z offset of the OrientedBox
+        """
+        return self._z_offset
 
     @cached_property
     def geometry(self) -> Polygon:
